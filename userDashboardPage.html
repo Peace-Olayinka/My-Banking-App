@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard Page</title>
+    <link rel="stylesheet" href="userDashboard_styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+</head>
+<body  onload="getCurrentUserDetails()">
+    <br>
+    <br>
+    <div id="dashbdbox" class="text-bg-dark w-50 m-auto mt-5 text-center py-5">
+        <div id="myWelcome" class="text-center  m-auto "></div>
+    
+        <div id="btnbox" class="text-center p-5">
+            <button class="btn btn-warning fw-bold" onclick="depositPg()">Deposit Fund</button>
+            <button class="btn btn-warning fw-bold" onclick="withdrawPg()">Withdrawal</button>
+            <button class="btn btn-warning fw-bold" onclick="transferPg()">Transfer Fund</button>
+            <button class="btn btn-warning fw-bold" onclick="airtimePg()">Purchase Airtime</button>
+            <button class="btn btn-warning fw-bold" onclick="payBillsPg()">Pay Bills</button>
+            <button class="btn btn-warning fw-bold" onclick="transactionHistPg()">Transaction History</button>
+        </div>
+
+        <hr>
+        <div class="text-center">
+            <button onclick="signOut()" class=" btn btn-danger  fw-bold text-white ">Sign Out</button>
+            <a href="index.html" class=" btn btn-success text-decoration-none fw-bold text-white ">Home</a>
+        </div>
+    </div>
+
+
+   <script>
+        const getCurrentUserDetails=()=>{
+            allUsers = JSON.parse(localStorage.getItem("localStUsers"))
+            var currentUser =  localStorage.getItem("currentUser") 
+            if (currentUser) {
+               for (let index = 0; index < allUsers.length; index++) {
+                    if (allUsers[index].email === currentUser) {
+                        myWelcome.innerHTML =`
+                            <h3> Welcome, ${allUsers[index].firstName} ${allUsers[index].lastName}</h3>
+                            <p> Account Number : <strong> ${allUsers[index].accountNumber}</strong>  </p> 
+                            <p> Account Balace : <strong> $ ${allUsers[index].accountBalance}</strong> </p>      
+                        ` 
+                        console.log(allUsers)
+                        console.log(allUsers[index].firstName)
+                        console.log(allUsers[index].accountBalance)
+                    }  
+               }
+            }
+        }
+
+        const signOut =()=>{
+            localStorage.removeItem("currentUser")
+            window.location.href = "signIn_Page.html"
+        }
+
+        const transferPg=()=>{
+            window.location.href = "transfer.html"
+        }
+        const depositPg=()=>{
+            window.location.href = "deposit.html"
+        }
+        const withdrawPg=()=>{
+            window.location.href = "withdrawPage.html"
+        }
+        const transactionHistPg=()=>{
+            window.location.href = "transactionHistory.html"
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+</body>
+</html>

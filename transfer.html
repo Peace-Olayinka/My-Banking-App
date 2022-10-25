@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer Page</title>
+    <link rel="stylesheet" href="userDashboard_styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+</head>
+<body>
+    <br>
+    <br>
+    <div id="dashbdbox" class="text-bg-dark w-50 m-auto mt-5 text-center py-5">
+        <h5>Transfer Fund</h5>
+        <hr> 
+        <div class=" m-auto w-75 text-start fw-bold">
+            <label for="">Amount:</label>
+            <input type="number" placeholder="Enter the Amount you want to transfer" class=" form-control" id="transferAmt"><br>
+            <label for="">Account Number:</label>
+            <input type="number" onkeyup="checkAcctName()" placeholder="Enter the receipient's Account Number" class="form-control" maxlength ="10" id="transferAcct"><br>
+            <div id="resp" class=""></div>
+            <label for="">PIN:</label>
+            <input type="number" placeholder="Enter your PIN" class=" form-control"><br>
+        </div>
+        <hr> 
+        <button onclick="makeTransfer()" class=" btn btn-success  fw-bold text-white ">Make Transfer</button>
+        <a href="userDashboardPage.html" class=" btn btn-danger text-decoration-none fw-bold text-white ">Cancel</a>
+        
+    </div>
+
+   <script>
+        let allUsers = JSON.parse(localStorage.getItem("localStUsers"))
+        const makeTransfer=()=>{
+            var currentUser =  localStorage.getItem("currentUser") 
+            let transferAmount = transferAmt.value
+            let transferAccount = transferAcct.value
+            
+            if (currentUser) {
+                if (transferAmount=='' || transferAccount=='') {
+                    resp.innerHTML= `FILL OUT EMPTY FIELDS!!!`
+                    resp.style.color ='red'
+                }
+                else{
+                    allUsers = JSON.parse(localStorage.getItem("localStUsers"))
+                    for (let indexSender = 0; indexSender < allUsers.length; indexSender++) {
+                        if (allUsers[indexSender].email === currentUser) {
+                            // alert('you are there')
+                            let AccountBal = allUsers[indexSender].accountBalance
+                            if (AccountBal >= transferAmount) { 
+                                let confirmation = confirm('do you want to proceed with this transaction?')
+                                if (confirmation) {
+                                    allUsers[indexSender].accountBalance = Number(allUsers[indexSender].accountBalance)-Number(transferAmount) 
+                                    console.log(allUsers)
+                                    localStorage.setItem("localStUsers", JSON.stringify(allUsers))
+                                    window.location.href="userDashboardPage.html"    
+                                }
+                            }else{
+                                alert('INSUFICIENT FUND!!')
+                            }  
+                        }
+                    }                    
+
+                }
+            }
+            allUsers = JSON.parse(localStorage.getItem("localStUsers"))
+            for (let indexRec = 0; indexRec < allUsers.length; indexRec++) {
+                if (allUsers[indexRec].accountNumber==transferAccount) {
+                    allUsers[indexRec].accountBalance = Number(allUsers[indexRec].accountBalance) + Number(transferAmount)
+                    console.log(allUsers)
+                    localStorage.setItem("localStUsers", JSON.stringify(allUsers))
+                }
+            }
+        }
+
+        // let regexforAcctNum  = /^([\d]{10})$/
+     
+        allUsers = JSON.parse(localStorage.getItem("localStUsers"))
+        const checkAcctName=()=>{
+            let transferAmount = transferAmt.value
+            let transferAccount = transferAcct.value
+            if (transferAccount=='' || transferAmount =='') {
+                resp.innerText = ''
+            }    
+            else if (transferAccount.length == 10) {
+                allUsers = JSON.parse(localStorage.getItem("localStUsers"))
+                for(let index = 0; index < allUsers.length; index++) {
+                    if (allUsers[index].accountNumber == transferAccount) {
+                        resp.innerHTML = `<h4> Transefer $${transferAmount} to  ${allUsers[index].firstName} ${allUsers[index].lastName}. <br> Enter Your PIN to continue </h4>` 
+                        resp.style.color = 'green'
+                        confirm.log(allUsers) 
+                    }
+                }
+            }  
+            else{
+                resp.innerText = `INVALID ACCOUNT NUMBER!!!` 
+                resp.style.color ='red'
+            }    
+        } 
+
+            // if (currentUser) {
+            //     allUsers = JSON.parse(localStorage.getItem("localStUsers"))
+            //     for (let indexSender = 0; indexSender < allUsers.length; indexSender++) {
+            //         if (allUsers[indexSender].email === currentUser) {
+            //             let AccountBal = allUsers[indexSender].accountBalance
+            //             if (AccountBal >= transferAmount) {
+            //                 allUsers = JSON.parse(localStorage.getItem("localStUsers"))
+            //                 for (let indexRec = 0; indexRec < allUsers.length; indexRec++) {
+            //                     if (allUsers[indexRec].accountNumber===transferAccount) {
+            //                         let confirmation = confirm('do you want to proceed with this transaction?')
+            //                         if (confirmation) {
+            //                             allUsers[indexSender].accountBalance = Number(allUsers[indexSender].accountBalance) - Number(transferAmount)
+    
+            //                             allUsers[indexRec].accountBalance = Number(allUsers[indexRec].accountBalance) + Number(transferAmount)
+    
+            //                             console.log(allUsers)
+            //                             localStorage.setItem("localStUsers", JSON.stringify(allUsers))
+            //                             window.location.href="userDashboardPage.html" 
+            //                         }
+    
+            //                     }
+                                
+            //                 }
+    
+            //             } else{
+            //                 alert('INSUFICIENT FUND!!!')
+            //             }      
+            //         }
+                    
+            //     }
+                
+            // }  
+          
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+</body>
+</html>

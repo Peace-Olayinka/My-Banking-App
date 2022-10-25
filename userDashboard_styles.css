@@ -1,0 +1,19 @@
+body{
+    background-image: url(./pic1.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+@media screen and (max-width:800px) {
+    #dashbdbox{
+        width: 95% !important;  
+    }
+}
+#btnbox{
+    display: flex; 
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    
+}
+

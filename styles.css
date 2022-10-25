@@ -1,0 +1,23 @@
+#main{
+    width: 100%;
+    height: 100vh;
+    background-image: url(./pic1.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+#topnav{
+     background-color: oldlace;
+}
+#nav1btn{
+    background-color: #000000;
+    color: white;   
+}
+#herotxt{
+    font-family: 'Franklin Gothic Medium';
+    font-size: 4rem;
+}
+#inviteDiv{
+    width: 100%;
+    background-color: pink;
+}

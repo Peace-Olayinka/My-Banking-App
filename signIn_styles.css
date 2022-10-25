@@ -1,0 +1,25 @@
+body{
+    background-image: url(./pic1.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+#mybox{
+    width: 30%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+    box-shadow: 10px 10px 10px black;  
+}
+@media screen and (max-width:800px) {
+    div{
+        width: 85% !important
+    }
+} 
+
+
